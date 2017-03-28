@@ -25,7 +25,7 @@ app.get('/webhook', function(req, res) {
 });
 
 // Message processing
-app.post('/', function (req, res) {
+app.post('/webhook', function (req, res) {
   console.log(req.body);
   var data = req.body;
 
@@ -74,7 +74,7 @@ function receivedMessage(event) {
   var messageText = message.text;
 
   let pin = 12;
-  if messageText.includes('red'){
+  if (messageText.includes('red')){
     pin = 11;
   }
   let action = 0;
@@ -82,7 +82,7 @@ function receivedMessage(event) {
     action = 1;
   }
   const params = {
-    url: 'http://0fa482ed.ngrok.io'
+    url: 'https://c22a7e44.ngrok.io',
     qs: {
       action: action,
       pin: pin
@@ -132,7 +132,7 @@ function sendTextMessage(recipientId, messageText) {
 function callSendAPI(messageData) {
   request({
     uri: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: { access_token: 'ACCESS_TOKEN' },
+    qs: { access_token: 'ACESS TOKEN' },
     method: 'POST',
     json: messageData
 
