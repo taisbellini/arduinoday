@@ -20,7 +20,7 @@ app.post('/webhook', function (req, res) {
 
   let color = data.parameters.color;
   let action = 1;
-  let pin = 11;
+  let pin = 14;
 
   if (data.action == 'lights_off') {
     action = 0;
@@ -28,7 +28,9 @@ app.post('/webhook', function (req, res) {
 
   if (color == 'green') {
     pin = 12;
-  }
+  } else if (color == 'red') {
+    pin = 11;
+  } 
 
   const params = {
     url: 'https://c22a7e44.ngrok.io',
