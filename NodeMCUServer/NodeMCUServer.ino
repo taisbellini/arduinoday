@@ -3,32 +3,58 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
 
+/* Node MCU pin mapping: 
+static const uint8_t D0   = 16;
+static const uint8_t D1   = 5;
+static const uint8_t D2   = 4;
+static const uint8_t D3   = 0;
+static const uint8_t D4   = 2;
+static const uint8_t D5   = 14;
+static const uint8_t D6   = 12;
+static const uint8_t D7   = 13;
+static const uint8_t D8   = 15;
+static const uint8_t D9   = 3;
+static const uint8_t D10  = 1;
+ */
+
 const char* ssid = "james.residencia";
 const char* password = "facada.2013";
 
+int red = 5;
+int green = 4;
+int rele = 0;
+
 ESP8266WebServer server(80);
 
-const int led = D0;
-
 void handleRoot() {
-  digitalWrite(led, 1);
+  digitalWrite(13, 1);
   server.send(200, "text/plain", "hello from esp8266!");
-  digitalWrite(led, 0);
+  digitalWrite(13, 0);
 }
 
 void handle_ON() {
-  digitalWrite(led, 1);
-  server.send(200, "text/plain", "turn on");
+  int pin = rele;
+  if (server.args() > 0){
+    pin = server.arg(0).toInt();  
+  }
+  digitalWrite(pin, HIGH);
+  String message = server.arg(0);
+  server.send(200, "text/plain", message);
 }
 
   
 void handle_OFF() {
-  digitalWrite(led, 0);
-  server.send(200, "text/plain", "turn off");
+  int pin = rele;
+  if (server.args() > 0){
+    pin = server.arg(0).toInt();
+  }
+  digitalWrite(pin, LOW);
+  String message = server.arg(0);
+  server.send(200, "text/plain", message);
 }
 
 void handleNotFound(){
-  digitalWrite(led, 1);
+  digitalWrite(13, 1);
   String message = "File Not Found\n\n";
   message += "URI: ";
   message += server.uri();
@@ -41,12 +67,16 @@ void handleNotFound(){
     message += " " + server.argName(i) + ": " + server.arg(i) + "\n";
   }
   server.send(404, "text/plain", message);
-  digitalWrite(led, 0);
+  digitalWrite(13, 0);
 }
 
 void setup(void){
-  pinMode(led, OUTPUT);
-  digitalWrite(led, 0);
+  pinMode(13, OUTPUT);
+  pinMode(red, OUTPUT);
+  pinMode(green, OUTPUT);
+  pinMode(rele, OUTPUT);
+  digitalWrite(rele, HIGH);
+  digitalWrite(13, 0);
   Serial.begin(115200);
   WiFi.begin(ssid, password);
   Serial.println("");
@@ -67,8 +97,8 @@ void setup(void){
   }
 
   server.on("/", handleRoot);
-  server.on("/on", handle_ON);
-  server.on("/off", handle_OFF);
+  server.on("/lights_on", handle_ON);
+  server.on("/lights_off", handle_OFF);
 
   server.on("/inline", [](){
     server.send(200, "text/plain", "this works as well");

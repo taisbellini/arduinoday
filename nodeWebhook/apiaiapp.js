@@ -20,7 +20,7 @@ app.post('/webhook', function (req, res) {
 
   let color = data.parameters.color;
   let action = 1;
-  let pin = 14;
+  let pin = 10;
 
   if (data.action == 'lights_off') {
     action = 0;
@@ -30,7 +30,7 @@ app.post('/webhook', function (req, res) {
     pin = 12;
   } else if (color == 'red') {
     pin = 11;
-  } 
+  }
 
   const params = {
     url: 'https://c22a7e44.ngrok.io',
@@ -47,7 +47,7 @@ app.post('/webhook', function (req, res) {
     res.sendStatus(200);
   });
 
-  
+
 });
 
 // Set Express to listen out for HTTP requests
