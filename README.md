@@ -1,7 +1,7 @@
 # Arduino Day
 The code and presentation to my talk at Arduino Day 2017 - PUCRS. Porto Alegre, RS - Brazil.
 
-Slides [here](https://drive.google.com/open?id=1Zv64BGLlVMG9voAHS8ktJM0N80V8e-KP8HkfdoDnFE4 "Arduino na Web"): 
+Slides [here](https://drive.google.com/open?id=1Zv64BGLlVMG9voAHS8ktJM0N80V8e-KP8HkfdoDnFE4 "Arduino na Web")
 
 ## Contents:
 
