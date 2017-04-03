@@ -17,8 +17,8 @@ static const uint8_t D9   = 3;
 static const uint8_t D10  = 1;
  */
 
-const char* ssid = "james.residencia";
-const char* password = "facada.2013";
+const char* ssid = "SSID";
+const char* password = "PWD";
 
 int red = 5;
 int green = 4;
